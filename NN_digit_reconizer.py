@@ -13,15 +13,15 @@ from matplotlib import pyplot as plt
 data = pd.read_csv('C:/Users/nakar/Desktop/NN_digit_reconizer/database.csv')
 data = np.array(data)
 m, n = data.shape
-n_Node = 30; # Number of nodes
+n_Node = 20; # Number of nodes
 np.random.shuffle(data) # shuffle before splitting into dev and training sets
 
-data_dev = data[0:1000].T
+data_dev = data[0:1500].T
 Y_dev = data_dev[0]
 X_dev = data_dev[1:n]
 X_dev = X_dev / 255.
 
-data_train = data[700:m].T
+data_train = data[1000:m].T
 Y_train = data_train[0]
 X_train = data_train[1:n]
 X_train = X_train / 255
@@ -51,7 +51,6 @@ def ReLU_deriv(Z):
     return Z > 0
 
 def one_hot(Y):
-    # one_hot_Y = np.zeros((Y.size, Y.max() + 1));
     one_hot_Y = np.zeros((Y.size,n_Node));
     one_hot_Y[np.arange(Y.size), Y] = 1;
     one_hot_Y = one_hot_Y.T;
@@ -93,7 +92,7 @@ def gradient_descent(X, Y, alpha, iterations):
     return W1, b1, W2, b2
 
 # Training the model
-W1, b1, W2, b2 = gradient_descent(X_train, Y_train, 0.10, 1000)
+W1, b1, W2, b2 = gradient_descent(X_train, Y_train, 0.10, 2000)
 
 def make_predictions(X, W1, b1, W2, b2):
     _, _, _, A2 = forward_prop(W1, b1, W2, b2, X)
@@ -102,8 +101,8 @@ def make_predictions(X, W1, b1, W2, b2):
 
 
 
-left, top, right, bottom =[2]*4 # border widths;
-direct = 'E:/Singapore/git_hub/git_hub_digit_recognizer/database/final'
+left, top, right, bottom =[3]*4 # border widths;
+direct = 'C:/Users/nakar/Desktop/NN_digit_reconizer'
 wsize = int(28) # x-axis pixel
 hsize = int(28) # y-axis pixel
 i_fig=1;
