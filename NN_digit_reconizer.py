@@ -13,6 +13,7 @@ from matplotlib import pyplot as plt
 data = pd.read_csv('C:/Users/nakar/Desktop/NN_digit_reconizer/database.csv')
 data = np.array(data)
 m, n = data.shape
+n_Node = 30; # Number of nodes
 np.random.shuffle(data) # shuffle before splitting into dev and training sets
 
 data_dev = data[0:1000].T
@@ -26,10 +27,10 @@ X_train = data_train[1:n]
 X_train = X_train / 255
 
 def init_params():
-    W1 = np.random.rand(10, 784) - 0.5
-    b1 = np.random.rand(10, 1) - 0.5
-    W2 = np.random.rand(10, 10) - 0.5
-    b2 = np.random.rand(10, 1) - 0.5
+    W1 = np.random.rand(n_Node, 784) - 0.5
+    b1 = np.random.rand(n_Node, 1) - 0.5
+    W2 = np.random.rand(n_Node, n_Node) - 0.5
+    b2 = np.random.rand(n_Node, 1) - 0.5
     return W1, b1, W2, b2
 
 def ReLU(Z):
@@ -50,7 +51,8 @@ def ReLU_deriv(Z):
     return Z > 0
 
 def one_hot(Y):
-    one_hot_Y = np.zeros((Y.size, Y.max() + 1));
+    # one_hot_Y = np.zeros((Y.size, Y.max() + 1));
+    one_hot_Y = np.zeros((Y.size,n_Node));
     one_hot_Y[np.arange(Y.size), Y] = 1;
     one_hot_Y = one_hot_Y.T;
     return one_hot_Y;
@@ -101,7 +103,7 @@ def make_predictions(X, W1, b1, W2, b2):
 
 
 left, top, right, bottom =[2]*4 # border widths;
-direct = 'C:/Users/nakar/Desktop/NN_digit_reconizer'
+direct = 'E:/Singapore/git_hub/git_hub_digit_recognizer/database/final'
 wsize = int(28) # x-axis pixel
 hsize = int(28) # y-axis pixel
 i_fig=1;
